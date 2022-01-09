@@ -95,6 +95,16 @@ setTimeout(() => {
         let parser = new Parser();
         const body = JSON.stringify({hello: 'world'});
         socket.write(parser.makePacket(1, body));
+        /*  
+            delay send:
+                socket.write(buffer.slice(0, 1));
+                setTimeout(() => {
+                    socket.write(buffer.slice(1, 2));
+                    setTimeout(() => {
+                        socket.write(buffer.slice(2));
+                    }, 2000)
+                }, 2000)
+        */
         parser.on('packet', (packet) => {
             console.log("receive response packet", JSON.stringify(packet, null, 4));
             socket.end();
